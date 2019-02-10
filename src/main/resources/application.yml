@@ -1,2 +1,47 @@
+# Spring Boot configuration
+spring:
+  jta: 
+    enabled: false
+  profiles:
+    active: production
+    
+management:
+  health:
+    defaults:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown: 
+      enabled: true
+
+info:
+  app:
+    name: '@project.name@'
+    description: '@project.description@'
+    versio: '@project.version@'
+    encoding: '@project.build.sourceEncoding@'
+    java:
+      version: '@java.version@'
+    groupId: '@project.groupId@'
+    artifactId: '@project.artifactId@'
+    version: '@project.version@'
+      
+
 server:
   port: 8081
+
+# Logging
+logging:
+  pattern:
+    console: "[%-5level] %date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %logger{15}#%line %msg\n"
+  level:
+    root: INFO
+    com.disney.wdat.jgit: INFO
+    org.springframework: INFO
+    org.hibernate: INFO
+ 
