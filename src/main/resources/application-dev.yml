@@ -8,6 +8,6 @@ logging:
   level:
     root: DEBUG
     com.training.mjunction.usersvcs: DEBUG
-    org.springframework: DEBUG
+    org.springframework: ERROR
     org.hibernate: DEBUG
  

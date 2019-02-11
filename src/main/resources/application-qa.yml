@@ -8,6 +8,6 @@ logging:
   level:
     root: INFO
     com.training.mjunction.usersvcs: INFO
-    org.springframework: INFO
+    org.springframework: ERROR
     org.hibernate: INFO
  
