@@ -11,10 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("Eroor resource")
-public class ErrorResource {
-	@ApiModelProperty("Error code")
-	private int errorCode;
-	@ApiModelProperty("Error message")
-	private String errorMessage;
+@ApiModel("Link resource")
+public class LinkResource {
+	@ApiModelProperty(value = "A link to a resource.")
+	private String href;
 }

@@ -16,6 +16,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 import com.training.mjunction.usersvcs.webservice.resources.ErrorResource;
 import com.training.mjunction.usersvcs.webservice.resources.UserDetailsRequestResource;
 import com.training.mjunction.usersvcs.webservice.resources.UserDetailsResponseResource;
@@ -26,7 +28,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@Api(value = "userService", tags = "User crud operations")
+@Api(value = "userService", tags = "User REST AP for CRUD Operations v1.0")
 @Path("/v1/users")
 public interface UserDetailsRESTService {
 
@@ -42,7 +44,9 @@ public interface UserDetailsRESTService {
 			@ApiResponse(code = 404, message = "Not Found. User for given id not found.", response = ErrorResource.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResource.class),
 			@ApiResponse(code = 503, message = "Service Unavailable", response = ErrorResource.class) })
-	Response createUser(@NotNull @Valid @ApiParam UserDetailsRequestResource userDetailsRequest, @Context UriInfo uriInfo);
+	default Response createUser(@NotNull @Valid @ApiParam final UserDetailsRequestResource userDetailsRequest, @Context final UriInfo uriInfo) {
+		throw new NotImplementedException("Method not implemented");
+	}
 
 	@PUT
 	@Path("/{userId}")
@@ -56,8 +60,10 @@ public interface UserDetailsRESTService {
 			@ApiResponse(code = 404, message = "Not Found. User for given id not found.", response = ErrorResource.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResource.class),
 			@ApiResponse(code = 503, message = "Service Unavailable", response = ErrorResource.class) })
-	Response updateUser(@NotNull @PathParam("userId") @ApiParam Long userId, @NotNull @Valid @ApiParam UserDetailsRequestResource userDetailsRequest,
-			@Context UriInfo uriInfo);
+	default Response updateUser(@NotNull @PathParam("userId") @ApiParam final Long userId,
+			@NotNull @Valid @ApiParam final UserDetailsRequestResource userDetailsRequest, @Context final UriInfo uriInfo) {
+		throw new NotImplementedException("Method not implemented");
+	}
 
 	@DELETE
 	@Path("/{userId}")
@@ -70,7 +76,9 @@ public interface UserDetailsRESTService {
 			@ApiResponse(code = 404, message = "Not Found. User for given id not found.", response = ErrorResource.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResource.class),
 			@ApiResponse(code = 503, message = "Service Unavailable", response = ErrorResource.class) })
-	Response deleteUser(@NotNull @PathParam("userId") @ApiParam Long userId, @Context UriInfo uriInfo);
+	default Response deleteUser(@NotNull @PathParam("userId") @ApiParam final Long userId, @Context final UriInfo uriInfo) {
+		throw new NotImplementedException("Method not implemented");
+	}
 
 	@GET
 	@Path("/{userId}")
@@ -83,7 +91,9 @@ public interface UserDetailsRESTService {
 			@ApiResponse(code = 404, message = "Not Found. User for given id not found.", response = ErrorResource.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResource.class),
 			@ApiResponse(code = 503, message = "Service Unavailable", response = ErrorResource.class) })
-	Response getUser(@NotNull @PathParam("userId") @ApiParam Long userId, @Context UriInfo uriInfo);
+	default Response getUser(@NotNull @PathParam("userId") @ApiParam final Long userId, @Context final UriInfo uriInfo) {
+		throw new NotImplementedException("Method not implemented");
+	}
 
 	@GET
 	@Path("/search")
@@ -96,10 +106,8 @@ public interface UserDetailsRESTService {
 			@ApiResponse(code = 404, message = "Not Found. User for given id not found.", response = ErrorResource.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResource.class),
 			@ApiResponse(code = 503, message = "Service Unavailable", response = ErrorResource.class) })
-	Response searchUsers(@MatrixParam("userName") @QueryParam("userName") @ApiParam String userName,
-			@MatrixParam("firstName") @QueryParam("firstName") @ApiParam String firstName,
-			@MatrixParam("lastName") @QueryParam("lastName") @ApiParam String lastName,
-			@MatrixParam("email") @QueryParam("email") @ApiParam String email, @MatrixParam("phone") @QueryParam("phone") @ApiParam String phone,
-			@Context UriInfo uriInfo);
+	default Response searchUsers(@MatrixParam("userName") @QueryParam("userName") @ApiParam final String userName, @Context final UriInfo uriInfo) {
+		throw new NotImplementedException("Method not implemented");
+	}
 
 }
