@@ -21,8 +21,7 @@ public class UserSvcsInfoContributer extends GitInfoContributor {
 
 	@Override
 	public void contribute(final Builder builder) {
-		builder.withDetail("Info", "userInfo").build();
-		builder.withDetail("git", generateContent());
+		builder.withDetail("Info", "userInfo").withDetail("git", generateContent()).withDetail("gitDetails", getProperties()).build();
 	}
 
 }

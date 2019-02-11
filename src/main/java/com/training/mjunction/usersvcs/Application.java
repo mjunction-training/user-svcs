@@ -8,15 +8,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import lombok.extern.java.Log;
+
+@Log
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
+		log.info("Starting application user-svcs");
 		return application.sources(Application.class);
 	}
 
 	public static void main(final String[] args) {
+		log.info("Starting application user-svcs");
 		SpringApplication.run(Application.class, args);
 	}
 

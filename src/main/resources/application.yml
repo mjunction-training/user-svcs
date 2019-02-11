@@ -4,6 +4,17 @@ spring:
     enabled: false
   profiles:
     active: production
+  application:
+    name: user-svcs
+  jersey.application-path: /api   # Jersey dispatcher servlet, make /api as URI root  
+  mvc:
+    servlet:
+      path: /
+    
+
+server:
+  port: ${appPort:8081}
+  
     
 management:
   health:
@@ -32,16 +43,13 @@ info:
     version: '@project.version@'
       
 
-server:
-  port: 8081
-
 # Logging
 logging:
   pattern:
     console: "[%-5level] %date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %logger{15}#%line %msg\n"
   level:
     root: INFO
-    com.disney.wdat.jgit: INFO
+    com.training.mjunction.usersvcs: INFO
     org.springframework: INFO
     org.hibernate: INFO
  

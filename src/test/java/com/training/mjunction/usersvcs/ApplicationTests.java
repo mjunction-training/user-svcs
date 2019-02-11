@@ -1,5 +1,6 @@
 package com.training.mjunction.usersvcs;
 
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
 
 import org.junit.Before;
@@ -18,7 +19,7 @@ import io.restassured.RestAssured;
 public class ApplicationTests {
 
 	@LocalServerPort
-	int port;
+	private int port;
 
 	@Before
 	public void setUp() {
@@ -27,14 +28,18 @@ public class ApplicationTests {
 
 	@Test
 	public void infoTest() {
-		RestAssured.given().when().contentType("application/json").get("/actuator/info").then().statusCode(200).body("app.name",
-				containsString("user-svcs"));
+		given().when().contentType("application/json").get("/actuator/info").then().statusCode(200).body("app.name", containsString("user-svcs"));
 	}
 
 	@Test
 	public void healthTest() {
-		RestAssured.given().when().contentType("application/json").get("/actuator/health").then().statusCode(200).body("status",
-				containsString("UP"));
+		given().when().contentType("application/json").get("/actuator/health").then().statusCode(200).body("status", containsString("UP"));
+	}
+
+	@Test
+	public void swaggerTest() {
+		given().when().contentType("application/json").auth().basic("user", "user").get("/api/swagger.json").then().statusCode(200)
+				.body("info.contact.name", containsString("Sanjib Talukdar"));
 	}
 
 }
