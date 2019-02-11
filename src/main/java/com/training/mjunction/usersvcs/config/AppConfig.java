@@ -6,12 +6,14 @@ import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
 
 import javax.ws.rs.ApplicationPath;
 
+import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.wadl.internal.WadlResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.training.mjunction.usersvcs.webservice.impl.UserDetailsRESTServiceImpl;
 
 import io.swagger.jaxrs.config.BeanConfig;
@@ -59,27 +61,32 @@ public class AppConfig extends ResourceConfig {
 	public Docket userApi() {
 
 		return new Docket(SWAGGER_2).select().apis(basePackage("com.training.mjunction.usersvcs.webservice")).paths(PathSelectors.any()).build()
-				.enable(true).apiInfo(metaData());
+				.enable(true)
+				.apiInfo(new ApiInfo("Mjunction Training API", "Spring Boot REST API for user", "1.0", "Traning Purpose",
+						new Contact("Sanjib Talukdar", "https://expogrow.org", "expogrow.org@gmail.com"), "Apache License Version 2.0",
+						"https://www.apache.org/licenses/LICENSE-2.0", asList(new VendorExtension<String>() {
+
+							@Override
+							public String getName() {
+								return "ExpoGrow.org";
+							}
+
+							@Override
+							public String getValue() {
+								return "mjunction-traning";
+							}
+
+						})));
 	}
 
-	private ApiInfo metaData() {
+	@Bean
+	public JacksonJsonProvider jsonProvider() {
+		return new JacksonJsonProvider();
+	}
 
-		return new ApiInfo("Mjunction Training API", "Spring Boot REST API for user", "1.0", "Traning Purpose",
-				new Contact("Sanjib Talukdar", "https://expogrow.org", "expogrow.org@gmail.com"), "Apache License Version 2.0",
-				"https://www.apache.org/licenses/LICENSE-2.0", asList(new VendorExtension<String>() {
-
-					@Override
-					public String getName() {
-						return "ExpoGrow.org";
-					}
-
-					@Override
-					public String getValue() {
-						return "mjunction-traning";
-					}
-
-				}));
-
+	@Bean
+	public ObjectMapper objetMapper() {
+		return new ObjectMapper();
 	}
 
 }

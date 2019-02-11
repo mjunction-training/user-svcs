@@ -1,0 +1,13 @@
+spring:
+  profiles: test
+
+# Logging
+logging:
+  pattern:
+    console: "[%-5level] %date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %logger{15}#%line %msg\n"
+  level:
+    root: TRACE
+    com.training.mjunction.usersvcs: TRACE
+    org.springframework: TRACE
+    org.hibernate: TRACE
+ 
