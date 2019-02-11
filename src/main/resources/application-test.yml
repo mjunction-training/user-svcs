@@ -8,6 +8,6 @@ logging:
   level:
     root: TRACE
     com.training.mjunction.usersvcs: TRACE
-    org.springframework: TRACE
+    org.springframework: ERROR
     org.hibernate: TRACE
  

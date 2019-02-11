@@ -3,14 +3,22 @@ package com.training.mjunction.usersvcs;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.training.mjunction.usersvcs.webservice.resources.UserDetailsRequestResource;
 
 import io.restassured.RestAssured;
 
@@ -22,6 +30,9 @@ public class ApplicationTests {
 
 	@LocalServerPort
 	private int port;
+
+	@Autowired
+	private ObjectMapper mappee;
 
 	@Before
 	public void setUp() {
@@ -42,6 +53,16 @@ public class ApplicationTests {
 	public void swaggerTest() {
 		given().when().contentType("application/json").auth().basic("user", "user").get("/api/swagger.json").then().statusCode(200)
 				.body("info.contact.name", containsString("Sanjib Talukdar"));
+	}
+
+	@Test
+	public void createUserrTest() throws JsonParseException, JsonMappingException, IOException {
+		final String json = "{" + "	\"username\": \"sanjeeb\"," + "	\"password\": \"password\"," + "	\"firstName\": \"Sanjib\","
+				+ "	\"latstName\": \"Talukdar\"," + "	\"email\": \"expogrow.org@gmail.com\"," + "	\"phone\": \"9833375042\","
+				+ "	\"authorities\": [{" + "		\"authority\": \"ADMIN\"" + "	}]" + "}";
+		final UserDetailsRequestResource request = mappee.readValue(json, UserDetailsRequestResource.class);
+		given().when().contentType("application/json").auth().basic("user", "user").accept("application/json").basePath("/api/v1/users/")
+				.body(request).then().statusCode(200).body("username", containsString("sanjeeb"));
 	}
 
 }
