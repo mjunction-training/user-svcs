@@ -1,11 +1,9 @@
 package com.training.mjunction.usersvcs.webservice.impl;
 
 import java.net.URI;
-import java.util.Map;
-import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
+import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.ws.rs.core.Response;
@@ -15,7 +13,9 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.training.mjunction.usersvcs.mapper.UserDetailsMapper;
+import com.training.mjunction.usersvcs.data.domain.User;
+import com.training.mjunction.usersvcs.data.repository.UserRepository;
+import com.training.mjunction.usersvcs.mapper.UserMapper;
 import com.training.mjunction.usersvcs.webservice.UserDetailsRESTService;
 import com.training.mjunction.usersvcs.webservice.resources.LinkResource;
 import com.training.mjunction.usersvcs.webservice.resources.UserDetailsRequestResource;
@@ -25,13 +25,14 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
+@Transactional
 public class UserDetailsRESTServiceImpl implements UserDetailsRESTService {
 
 	@Autowired
 	private Validator validator;
 
-	// TODO not required for database implementation
-	private final Map<String, UserDetailsResponseResource> userMap = new ConcurrentHashMap<>();
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
 	public Response createUser(final UserDetailsRequestResource userDetailsRequest, final UriInfo uriInfo) {
@@ -42,19 +43,13 @@ public class UserDetailsRESTServiceImpl implements UserDetailsRESTService {
 			log.error(constraintViolation.getMessage());
 		}
 
-		// TODO jpa unique constraint will take care of this
-		if (userMap.containsKey(userDetailsRequest.getUsername())) {
-			throw new IllegalArgumentException("Username alreday used.");
-		}
+		final UserMapper mapper = Mappers.getMapper(UserMapper.class);
 
-		final UserDetailsMapper mapper = Mappers.getMapper(UserDetailsMapper.class);
+		final User user = mapper.toUser(userDetailsRequest);
 
-		final UserDetailsResponseResource response = mapper.toResponse(userDetailsRequest);
+		userRepository.save(user);
 
-		// TODO database generated
-		response.setUserId(new Random().nextLong());
-
-		userMap.put(response.getUsername(), response);
+		final UserDetailsResponseResource response = mapper.toUserDetailsRequestResource(user);
 
 		final URI location = uriInfo.getAbsolutePathBuilder().path("/" + response.getUserId()).build();
 
@@ -66,12 +61,15 @@ public class UserDetailsRESTServiceImpl implements UserDetailsRESTService {
 	@Override
 	public Response searchUsers(final String userName, final UriInfo uriInfo) {
 
-		// TODO DB implementation required
-		final UserDetailsResponseResource response = userMap.get(userName);
+		final User user = userRepository.findByUsername(userName);
 
-		if (null == response) {
+		if (null == user) {
 			throw new IllegalArgumentException("Username not found.");
 		}
+
+		final UserMapper responseMapper = Mappers.getMapper(UserMapper.class);
+
+		final UserDetailsResponseResource response = responseMapper.toUserDetailsRequestResource(user);
 
 		final URI location = uriInfo.getAbsolutePathBuilder().path("/" + response.getUserId()).build();
 

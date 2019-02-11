@@ -57,17 +57,15 @@ public class Swagger2Config extends ResourceConfig implements SwaggerResourcesPr
 		this.register(ApiListingResource.class);
 		this.register(SwaggerSerializers.class);
 		this.register(WadlResource.class);
-		this.register(WadlResource.class);
 		this.register(UserDetailsRESTServiceImpl.class);
-		final BeanConfig config = new BeanConfig();
-		config.setTitle("Mjunction Training API");
-		config.setVersion("v1");
-		config.setContact("Sanjib Talukdar");
-		config.setSchemes(new String[] { "http", "https" });
-		config.setBasePath(apiPath);
-		config.setResourcePackage("com.training.mjunction.usersvcs.webservice");
-		config.setPrettyPrint(true);
-		config.setScan(true);
+		swaggerConfig.setTitle("Mjunction Training API");
+		swaggerConfig.setVersion("v1");
+		swaggerConfig.setContact("Sanjib Talukdar");
+		swaggerConfig.setSchemes(new String[] { "http", "https" });
+		swaggerConfig.setBasePath(apiPath);
+		swaggerConfig.setResourcePackage("com.training.mjunction.usersvcs.webservice");
+		swaggerConfig.setPrettyPrint(true);
+		swaggerConfig.setScan(false);
 	}
 
 	@Override

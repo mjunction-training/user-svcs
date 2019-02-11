@@ -1,5 +1,8 @@
 spring:
   profiles: dev
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 # Logging
 logging:
@@ -10,4 +13,6 @@ logging:
     com.training.mjunction.usersvcs: DEBUG
     org.springframework: ERROR
     org.hibernate: DEBUG
+    sun.rmi.loader: ERROR
+    org.reflections: ERROR
  

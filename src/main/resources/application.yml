@@ -1,5 +1,7 @@
 # Spring Boot configuration
 spring:
+  jmx:
+    enabled: false
   jta: 
     enabled: false
   profiles:
@@ -10,7 +12,23 @@ spring:
   mvc:
     servlet:
       path: /
-    
+
+# Naming strategy
+
+# Allows Hibernate to generate SQL optimized for a particular DBMS
+
+#Turn Statistics on
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        naming:
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl  
+          physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        generate_statistics: true
+        format_sql: true   
+    show-sql: true
+       
 
 server:
   port: ${appPort:8081}
@@ -29,6 +47,13 @@ management:
       show-details: always
     shutdown: 
       enabled: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        stat: debug
+        type: trace
 
 info:
   app:

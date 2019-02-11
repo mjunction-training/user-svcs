@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.MatrixParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -106,7 +105,7 @@ public interface UserDetailsRESTService {
 			@ApiResponse(code = 404, message = "Not Found. User for given id not found.", response = ErrorResource.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResource.class),
 			@ApiResponse(code = 503, message = "Service Unavailable", response = ErrorResource.class) })
-	default Response searchUsers(@MatrixParam("userName") @QueryParam("userName") @ApiParam final String userName, @Context final UriInfo uriInfo) {
+	default Response searchUsers(@QueryParam("userName") @ApiParam final String userName, @Context final UriInfo uriInfo) {
 		throw new NotImplementedException("Method not implemented");
 	}
 
