@@ -2,6 +2,8 @@
 spring:
   jta: 
     enabled: false
+  jmx:
+    enabled: false
   profiles:
     active: dev
   application:
