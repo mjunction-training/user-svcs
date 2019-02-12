@@ -3,6 +3,23 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        naming:
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl  
+          physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        generate_statistics: true
+        format_sql: true   
+    show-sql: true
+  datasource:
+    url: 'jdbc:h2:mem:users;MODE=Mysql;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS USERS'
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+
+
+  
 
 # Logging
 logging:
@@ -13,6 +30,8 @@ logging:
     com.training.mjunction.usersvcs: DEBUG
     org.springframework: NONE
     org.hibernate: DEBUG
-    sun.rmi.loader: ERROR
+    sun.rmi: ERROR
     org.reflections: ERROR
+    sun.reflect: ERROR
+    org.apache.coyote.http11: ERROR
  

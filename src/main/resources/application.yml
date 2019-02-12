@@ -11,24 +11,7 @@ spring:
   jersey.application-path: /api   # Jersey dispatcher servlet, make /api as URI root  
   mvc:
     servlet:
-      path: /
-
-# Naming strategy
-
-# Allows Hibernate to generate SQL optimized for a particular DBMS
-
-#Turn Statistics on
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        naming:
-          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl  
-          physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-        generate_statistics: true
-        format_sql: true   
-    show-sql: true
-       
+      path: /       
 
 server:
   port: ${appPort:8081}

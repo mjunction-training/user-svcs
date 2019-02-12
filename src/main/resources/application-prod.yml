@@ -1,5 +1,17 @@
 spring:
   profiles: prod
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        naming:
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl  
+          physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        generate_statistics: false
+        format_sql: false   
+    show-sql: false
 
 # Logging
 logging:
@@ -10,4 +22,8 @@ logging:
     com.training.mjunction.usersvcs: ERROR
     org.springframework: ERROR
     org.hibernate: ERROR
+    sun.rmi: ERROR
+    org.reflections: ERROR
+    sun.reflect: ERROR
+    org.apache.coyote.http11: ERROR
  

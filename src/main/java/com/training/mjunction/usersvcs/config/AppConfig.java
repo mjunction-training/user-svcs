@@ -1,7 +1,6 @@
 package com.training.mjunction.usersvcs.config;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
-import static org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.HSQL;
 
 import java.util.Optional;
 
@@ -20,7 +19,6 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -100,9 +98,4 @@ public class AppConfig {
 		return ds;
 	}
 
-	@Profile({ "test" })
-	@Bean(name = { "dataSource" })
-	public DataSource hsqoDataSource() {
-		return new EmbeddedDatabaseBuilder().setType(HSQL).build();
-	}
 }
