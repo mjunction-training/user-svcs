@@ -34,4 +34,6 @@ logging:
     org.reflections: ERROR
     sun.reflect: ERROR
     org.apache.coyote.http11: ERROR
+    org.glassfish.jersey.internal.util: ERROR
+    org.apache.tomcat.util.descriptor: ERROR
  
