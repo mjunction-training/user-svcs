@@ -10,4 +10,9 @@ logging:
     com.training.mjunction.usersvcs: TRACE
     org.springframework: ERROR
     org.hibernate: TRACE
+    sun.rmi: ERROR
+    org.reflections: ERROR
+    sun.reflect: ERROR
+    org.apache.coyote.http11: ERROR
+
  
