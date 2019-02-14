@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -17,6 +19,8 @@ import lombok.extern.log4j.Log4j2;
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableTransactionManagement
+@EnableDiscoveryClient
+@EnableHystrix
 @ComponentScan(basePackages = "com.training.mjunction.usersvcs")
 public class Application extends SpringBootServletInitializer {
 
