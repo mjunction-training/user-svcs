@@ -43,8 +43,8 @@ logging:
   level:
     org:
       hibernate:
-        stat: debug
-        type: trace
+        stat: ERROR
+        type: ERROR
 
 info:
   app:

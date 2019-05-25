@@ -66,7 +66,7 @@ public class AppConfig {
 	@Profile({ "!test" })
 	@Bean(destroyMethod = "close", name = "dataSource")
 	public DataSource batchDataSource(@Value("${mjunction.training.db.url:jdbc:mariadb://localhost:3306/users}") final String jdbcUrl,
-			@Value("${mjunction.training.db.usr:user}") final String userName, @Value("${mjunction.training.db.pwd:password}") final String password,
+			@Value("${mjunction.training.db.usr:root}") final String userName, @Value("${mjunction.training.db.pwd:root}") final String password,
 			@Value("${mjunction.training.db.driver:org.mariadb.jdbc.Driver}") final String driverClass,
 			@Value("${mjunction.training.db.validationSql:select 1}") final String valdiationQuery) {
 

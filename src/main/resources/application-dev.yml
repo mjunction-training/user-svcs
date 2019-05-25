@@ -18,10 +18,10 @@ logging:
   pattern:
     console: "[%-5level] %date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %logger{15}#%line %msg\n"
   level:
-    root: DEBUG
-    com.training.mjunction.usersvcs: DEBUG
+    root: ERROR
+    com.training.mjunction.usersvcs: ERROR
     org.springframework: ERROR
-    org.hibernate: DEBUG
+    org.hibernate: ERROR
     sun.rmi: ERROR
     org.reflections: ERROR
     sun.reflect: ERROR
