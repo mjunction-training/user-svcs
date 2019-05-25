@@ -58,7 +58,7 @@ public class ApplicationTests {
 	@Test
 	public void createUserrTest() throws JsonParseException, JsonMappingException, IOException {
 		final String json = "{" + "	\"username\": \"sanjeeb\"," + "	\"password\": \"password\"," + "	\"firstName\": \"Sanjib\","
-				+ "	\"latstName\": \"Talukdar\"," + "	\"email\": \"expogrow.org@gmail.com\"," + "	\"phone\": \"9833375042\","
+				+ "	\"lastName\": \"Talukdar\"," + "	\"email\": \"expogrow.org@gmail.com\"," + "	\"phone\": \"9833375042\","
 				+ "	\"authorities\": [{" + "		\"authority\": \"ADMIN\"" + "	}]" + "}";
 		final UserDetailsRequestResource request = mappee.readValue(json, UserDetailsRequestResource.class);
 		given().when().contentType("application/json").auth().basic("user", "user").accept("application/json").basePath("/api/v1/users/")

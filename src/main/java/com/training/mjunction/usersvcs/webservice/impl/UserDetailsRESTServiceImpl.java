@@ -11,6 +11,9 @@ import javax.ws.rs.core.UriInfo;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import com.training.mjunction.usersvcs.data.domain.User;
@@ -26,6 +29,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Service
 @Transactional
+@RefreshScope(proxyMode = ScopedProxyMode.DEFAULT)
 public class UserDetailsRESTServiceImpl implements UserDetailsRESTService {
 
 	@Autowired
@@ -33,6 +37,14 @@ public class UserDetailsRESTServiceImpl implements UserDetailsRESTService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Value("${test.refresh.msg:Hi!}")
+	private String mgs;
+
+	@Override
+	public Response refreshTest() {
+		return Response.ok().entity("{\"refreshed\":\"" + mgs + "\"}").build();
+	}
 
 	@Override
 	public Response createUser(final UserDetailsRequestResource userDetailsRequest, final UriInfo uriInfo) {

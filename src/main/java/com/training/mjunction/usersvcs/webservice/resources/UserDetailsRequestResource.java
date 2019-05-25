@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel("User details request resource")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "username", "password", "firstName", "latstName", "email", "phone", "authorities" })
+@JsonPropertyOrder({ "username", "password", "firstName", "lastName", "email", "phone", "authorities" })
 public class UserDetailsRequestResource {
 	@NotNull
 	@Size(min = 1, max = 36)
@@ -40,7 +40,7 @@ public class UserDetailsRequestResource {
 	@NotNull
 	@Size(min = 1, max = 50)
 	@ApiModelProperty("Last Name")
-	private String latstName;
+	private String lastName;
 	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
 			+ "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "{invalid.email}")
 	@ApiModelProperty("Email")

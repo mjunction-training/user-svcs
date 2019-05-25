@@ -109,4 +109,20 @@ public interface UserDetailsRESTService {
 		throw new NotImplementedException("Method not implemented");
 	}
 
+	
+	@GET
+	@Path("/refresh-test")
+	@Produces({ "application/json" })
+	@ApiOperation(value = "refreshTest", notes = "This API is used to search an existing user resources", tags = { "search" })
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successful.", response = UserDetailsResponseResource.class),
+			@ApiResponse(code = 400, message = "Bad request data", response = ErrorResource.class),
+			@ApiResponse(code = 401, message = "Unauthorized (Lacking Credentials for Authorized Resource. As per RFP 7235 - WWW-Authenticate Header needs to be sent for 401 containing one challenge)", response = ErrorResource.class),
+			@ApiResponse(code = 403, message = "Forbidden. API does not need to explicitly deal with this. Will be handled by APIM and OAuth Filter", response = ErrorResource.class),
+			@ApiResponse(code = 404, message = "Not Found. User for given id not found.", response = ErrorResource.class),
+			@ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResource.class),
+			@ApiResponse(code = 503, message = "Service Unavailable", response = ErrorResource.class) })
+	default Response refreshTest() {
+		throw new NotImplementedException("Method not implemented");
+	}
+
 }

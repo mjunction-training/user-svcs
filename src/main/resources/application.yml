@@ -1,9 +1,9 @@
 # Spring Boot configuration
 spring:
   jmx:
-    enabled: false
+    enabled: true
   jta: 
-    enabled: false
+    enabled: true
   profiles:
     active: dev
   application:
@@ -11,19 +11,7 @@ spring:
   jersey.application-path: /api   # Jersey dispatcher servlet, make /api as URI root  
   mvc:
     servlet:
-      path: /       
-  cloud:
-    config:
-      uri: ${CONFIG_SERVER_URL:http://localhost:8082}
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}
-
-server:
-  port: ${appPort:8081}
-  
+      path: /
     
 management:
   health:
