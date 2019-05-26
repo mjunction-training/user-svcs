@@ -5,6 +5,13 @@ spring:
         enabled: true
       enabled: true 
       uri: ${CONFIG_SERVER_URL:http://localhost:8888}  
+  boot:
+    admin:
+      client:
+        username: "user"       #These two are needed so that the client
+        password: "password"   #can register at the protected server api
+        url:
+        - http://localhost:9090/
       
 eureka:
   client:
@@ -12,4 +19,4 @@ eureka:
       defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}
 
 server:
-  port: ${appPort:8081}
+  port: ${appPort:8086}

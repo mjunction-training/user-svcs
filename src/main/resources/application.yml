@@ -45,4 +45,5 @@ info:
     groupId: '@project.groupId@'
     artifactId: '@project.artifactId@'
     version: '@project.version@'   
- 
+  tags:
+    security: insecured  

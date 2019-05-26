@@ -24,6 +24,7 @@
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>MM-dd-yyyy'T'HH:mm:ssZ</maven.build.timestamp.format>
 		<sonar.exclusions>**/com/dlr/sales/batch/gnr/model/*</sonar.exclusions>
+		<spring-boot-admin-server.version>2.1.5</spring-boot-admin-server.version>
 	</properties>
 
 	<dependencies>
@@ -65,6 +66,12 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+			<version>${spring-boot-admin-server.version}</version>
 		</dependency>
 
 		<dependency>
