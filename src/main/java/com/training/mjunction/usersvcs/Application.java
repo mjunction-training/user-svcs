@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import brave.sampler.Sampler;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -44,5 +45,10 @@ public class Application extends SpringBootServletInitializer {
 			}
 		};
 	}
+	
+	@Bean
+    public Sampler defaultSampler() {
+        return Sampler.ALWAYS_SAMPLE;
+    }
 
 }
