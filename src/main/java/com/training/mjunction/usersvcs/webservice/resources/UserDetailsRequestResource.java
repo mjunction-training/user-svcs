@@ -50,5 +50,5 @@ public class UserDetailsRequestResource {
 	private String phone;
 	@NotNull
 	@ApiModelProperty("Roles")
-	private Set<RoleResource> authorities;
+	private Set<RoleDetailsResource> authorities;
 }

@@ -1,21 +1,25 @@
 package com.training.mjunction.usersvcs.data.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,26 +27,26 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "user", schema = "users")
-public class User extends Auditable<String> {
+@EqualsAndHashCode(callSuper = false, of = "username")
+@Table(name = "user", schema = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }),
+		@UniqueConstraint(columnNames = { "email" }), @UniqueConstraint(columnNames = { "phone" }) })
+public class User extends Auditable<String> implements UserDetails {
+	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id")
-	private Long userId;
-	@Column(name = "username", nullable = false, unique = true)
+	@Column(name = "username")
 	private String username;
 	@Column(name = "password", nullable = false)
 	private String password;
 	@Column(name = "first_name")
 	private String firstName;
-	@Column(name = "latst_name")
-	private String latstName;
-	@Column(name = "email")
+	@Column(name = "last_name")
+	private String lastName;
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
-	@Column(name = "phone")
+	@Column(name = "phone", nullable = false, unique = true)
 	private String phone;
 	@Builder.Default
 	@Column(name = "account_non_expired")
@@ -56,9 +60,9 @@ public class User extends Auditable<String> {
 	@Builder.Default
 	@Column(name = "enabled")
 	private final boolean enabled = true;
-	@ManyToMany(cascade = CascadeType.ALL)
+	@OrderBy
 	@Builder.Default
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private final Set<Role> authorities = new HashSet<>();
-
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Role.class)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "username"), inverseJoinColumns = @JoinColumn(name = "authority"))
+	private final SortedSet<Role> authorities = new TreeSet<>();
 }

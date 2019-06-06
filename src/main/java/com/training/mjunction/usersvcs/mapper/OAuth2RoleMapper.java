@@ -4,14 +4,15 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import com.training.mjunction.usersvcs.data.domain.OAuth2Role;
 import com.training.mjunction.usersvcs.data.domain.Role;
 import com.training.mjunction.usersvcs.webservice.resources.RoleDetailsResource;
 
 @Mapper
-public interface RoleMapper {
+public interface OAuth2RoleMapper {
 
 	Role toRole(RoleDetailsResource request);
 
 	@Mappings({ @Mapping(target = "authority", source = "role.authority") })
-	RoleDetailsResource toRoleResource(Role role);
+	RoleDetailsResource toRoleResource(OAuth2Role role);
 }

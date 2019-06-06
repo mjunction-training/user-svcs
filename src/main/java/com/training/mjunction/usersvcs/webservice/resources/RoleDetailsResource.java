@@ -15,7 +15,7 @@ import lombok.NonNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel("User role resource")
-public class RoleResource {
+public class RoleDetailsResource {
 	@NonNull
 	@ApiModelProperty("User role")
 	@Size(min = 1, max = 50)

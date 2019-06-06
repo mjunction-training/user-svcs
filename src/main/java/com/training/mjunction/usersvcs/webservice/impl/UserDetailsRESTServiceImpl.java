@@ -11,14 +11,12 @@ import javax.ws.rs.core.UriInfo;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.training.mjunction.usersvcs.data.domain.User;
-import com.training.mjunction.usersvcs.data.repository.UserRepository;
 import com.training.mjunction.usersvcs.mapper.UserMapper;
+import com.training.mjunction.usersvcs.service.UserDetailsService;
 import com.training.mjunction.usersvcs.webservice.UserDetailsRESTService;
 import com.training.mjunction.usersvcs.webservice.resources.LinkResource;
 import com.training.mjunction.usersvcs.webservice.resources.UserDetailsRequestResource;
@@ -29,22 +27,16 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Service
 @Transactional
-@RefreshScope(proxyMode = ScopedProxyMode.DEFAULT)
 public class UserDetailsRESTServiceImpl implements UserDetailsRESTService {
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private Validator validator;
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Value("${test.refresh.msg:Hi!}")
-	private String mgs;
-
-	@Override
-	public Response refreshTest() {
-		return Response.ok().entity("{\"refreshed\":\"" + mgs + "\"}").build();
-	}
+	private UserDetailsService userDetailsService;
 
 	@Override
 	public Response createUser(final UserDetailsRequestResource userDetailsRequest, final UriInfo uriInfo) {
@@ -59,11 +51,13 @@ public class UserDetailsRESTServiceImpl implements UserDetailsRESTService {
 
 		final User user = mapper.toUser(userDetailsRequest);
 
-		userRepository.save(user);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-		final UserDetailsResponseResource response = mapper.toUserDetailsRequestResource(user);
+		final User created = userDetailsService.save(user);
 
-		final URI location = uriInfo.getAbsolutePathBuilder().path("/" + response.getUserId()).build();
+		final UserDetailsResponseResource response = mapper.toUserDetailsRequestResource(created);
+
+		final URI location = uriInfo.getAbsolutePathBuilder().path("/" + response.getUsername()).build();
 
 		response.getLinks().put("self", new LinkResource(location.toString()));
 
@@ -73,7 +67,7 @@ public class UserDetailsRESTServiceImpl implements UserDetailsRESTService {
 	@Override
 	public Response searchUsers(final String userName, final UriInfo uriInfo) {
 
-		final User user = userRepository.findByUsername(userName);
+		final User user = userDetailsService.loadUserByUsername(userName);
 
 		if (null == user) {
 			throw new IllegalArgumentException("Username not found.");
@@ -83,7 +77,7 @@ public class UserDetailsRESTServiceImpl implements UserDetailsRESTService {
 
 		final UserDetailsResponseResource response = responseMapper.toUserDetailsRequestResource(user);
 
-		final URI location = uriInfo.getAbsolutePathBuilder().path("/" + response.getUserId()).build();
+		final URI location = uriInfo.getAbsolutePathBuilder().path("/" + response.getUsername()).build();
 
 		response.getLinks().put("self", new LinkResource(location.toString()));
 

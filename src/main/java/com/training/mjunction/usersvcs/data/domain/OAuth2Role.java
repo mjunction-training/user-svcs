@@ -25,19 +25,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false, of = "authority")
-@Table(name = "role", schema = "users")
-public class Role extends Auditable<String> implements GrantedAuthority, Comparable<Role> {
+@Table(name = "client_role", schema = "users")
+public class OAuth2Role extends Auditable<String> implements GrantedAuthority, Comparable<OAuth2Role> {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "authority")
 	private String authority;
 	@Builder.Default
 	@ManyToMany(mappedBy = "authorities")
-	private final Set<User> users = new HashSet<>();
+	private final Set<OAuth2Client> clients = new HashSet<>();
 
 	@Override
-	public int compareTo(final Role o) {
+	public int compareTo(final OAuth2Role o) {
 		return authority.compareToIgnoreCase(o.authority);
 	}
-
 }
