@@ -65,27 +65,27 @@ public class OAuth2Client extends Auditable<String> implements ClientDetails {
 	private Integer refreshTokenValiditySeconds;
 	@Getter
 	@Setter
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@Builder.Default
 	private Set<String> scope = new TreeSet<>();
 	@Getter
 	@Setter
 	@Builder.Default
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	private Set<String> resourceIds = new TreeSet<>();
 	@Getter
 	@Setter
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@Builder.Default
 	private Set<String> autoApproveScope = new TreeSet<>();
 	@Getter
 	@Setter
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@Builder.Default
 	private Set<String> authorizedGrantTypes = new TreeSet<>();
 	@Getter
 	@Setter
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@Builder.Default
 	private Set<String> registeredRedirectUri = new TreeSet<>();
 	@Setter

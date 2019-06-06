@@ -201,3 +201,6 @@ INSERT INTO `oauth2client_authorized_grant_types` (oauth2client_client_id, autho
 INSERT INTO `oauth2client_authorized_grant_types` (oauth2client_client_id, authorized_grant_types) VALUES ('oauth2-read-write-client', 'refresh_token');
 INSERT INTO `oauth2client_authorized_grant_types` (oauth2client_client_id, authorized_grant_types) VALUES ('oauth2-read-write-client', 'implicit');
 
+INSERT INTO `oauth2client_registered_redirect_uri`  (oauth2client_client_id, registered_redirect_uri) VALUES ('oauth2-read-client', 'http://localhost:8083/login');
+INSERT INTO `oauth2client_registered_redirect_uri`  (oauth2client_client_id, registered_redirect_uri) VALUES ('oauth2-read-write-client', 'http://localhost:8083/login');
+

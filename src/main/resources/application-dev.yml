@@ -14,7 +14,11 @@ spring:
     admin:
       client:
         username: "user"       #These two are needed so that the client
-        password: "user"   #can register at the protected server api
+        password: "password"   #can register at the protected server api
+        instance:          prefer-ip: true
+          metadata:
+            user.name: "user"         #These two are needed so that the server
+            user.password: "user" #can access the protected client endpoints
         url:
         - ${ADMIN_SERVER_URL:http://localhost:9090/}
   jpa:
@@ -41,8 +45,9 @@ logging:
     console: "[%-5level] %date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %logger{15}#%line %msg\n"
   level:
     root: INFO
-    com.training.mjunction.usersvcs: ERROR
     org.springframework: ERROR
+    org.springframework.security: DEBUG
+    com.training.mjunction.usersvcs: ERROR
     org.hibernate: ERROR
     sun.rmi: ERROR
     org.reflections: ERROR

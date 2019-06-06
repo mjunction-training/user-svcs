@@ -74,28 +74,30 @@ public class Swagger2Config extends ResourceConfig implements SwaggerResourcesPr
 		jerseySwaggerResource.setLocation("/api/swagger.json");
 		jerseySwaggerResource.setSwaggerVersion("2.0");
 		jerseySwaggerResource.setName("user-service");
-		return Stream.concat(Stream.of(jerseySwaggerResource), inMemorySwaggerResourcesProvider.get().stream()).collect(Collectors.toList());
+		return Stream.concat(Stream.of(jerseySwaggerResource), inMemorySwaggerResourcesProvider.get().stream())
+				.collect(Collectors.toList());
 	}
 
 	@Bean
 	public Docket userApi() {
-		return new Docket(SWAGGER_2).select().apis(basePackage("com.training.mjunction.usersvcs.webservice")).paths(PathSelectors.any()).build()
-				.enable(true)
-				.apiInfo(new ApiInfo("Mjunction Training API", "Spring Boot REST API for user", "1.0", "Traning Purpose",
-						new Contact("Sanjib Talukdar", "https://expogrow.org", "expogrow.org@gmail.com"), "Apache License Version 2.0",
-						"https://www.apache.org/licenses/LICENSE-2.0", asList(new VendorExtension<String>() {
+		return new Docket(SWAGGER_2).select().apis(basePackage("com.training.mjunction.usersvcs.webservice"))
+				.paths(PathSelectors.any()).build().enable(true).apiInfo(
+						new ApiInfo("Mjunction Training API", "Spring Boot REST API for user", "1.0", "Traning Purpose",
+								new Contact("Sanjib Talukdar", "https://expogrow.org", "expogrow.org@gmail.com"),
+								"Apache License Version 2.0", "https://www.apache.org/licenses/LICENSE-2.0",
+								asList(new VendorExtension<String>() {
 
-							@Override
-							public String getName() {
-								return "ExpoGrow.org";
-							}
+									@Override
+									public String getName() {
+										return "ExpoGrow.org";
+									}
 
-							@Override
-							public String getValue() {
-								return "mjunction-traning";
-							}
+									@Override
+									public String getValue() {
+										return "mjunction-traning";
+									}
 
-						})));
+								})));
 	}
 
 }

@@ -1,42 +1,27 @@
-<#-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->
-<#-- @ftlvariable name="error" type="java.util.Optional<String>" -->
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8">
-    <title>Log in</title>
+<link rel="stylesheet" href="css/wro.css"/>
 </head>
 <body>
-<nav role="navigation">
-    <ul>
-        <li><a href="/">Home</a></li>
-    </ul>
-</nav>
-
-<h1>Log in</h1>
-
-<p>You can use: demo@localhost / demo</p>
-
-<form role="form" action="/login" method="post">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-    <div>
-        <label for="email">Email address</label>
-        <input type="email" name="email" id="email" required autofocus/>
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required/>
-    </div>
-    <div>
-        <label for="remember-me">Remember me</label>
-        <input type="checkbox" name="remember-me" id="remember-me"/>
-    </div>
-    <button type="submit">Sign in</button>
-</form>
-
-<#if error.isPresent()>
-<p>The email or password you have entered is invalid, try again.</p>
+<#if RequestParameters['error']??>
+	<div class="alert alert-danger">
+		There was a problem logging in. Please try again.
+	</div>
 </#if>
+	<div class="container">
+		<form role="form" action="login" method="post">
+		  <div class="form-group">
+		    <label for="username">Username:</label>
+		    <input type="text" class="form-control" id="username" name="username"/>
+		  </div>
+		  <div class="form-group">
+		    <label for="password">Password:</label>
+		    <input type="password" class="form-control" id="password" name="password"/>
+		  </div>
+		  <input type="hidden" id="csrf_token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		  <button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+	<script src="js/wro.js" type="text/javascript"></script>
 </body>
 </html>
