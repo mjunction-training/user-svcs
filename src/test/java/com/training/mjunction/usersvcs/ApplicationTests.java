@@ -51,11 +51,12 @@ public class ApplicationTests {
 				containsString("UP"));
 	}
 
-	@Test
-	public void swaggerTest() {
-		given().when().contentType("application/json").get("/api/swagger.json").then().statusCode(200)
-				.body("info.contact.name", containsString("Sanjib Talukdar"));
-	}
+	/*
+	 * @Test public void swaggerTest() {
+	 * given().when().contentType("application/json").get("/api/swagger.json").then(
+	 * ).statusCode(200) .body("info.contact.name",
+	 * containsString("Sanjib Talukdar")); }
+	 */
 
 	@Test
 	public void createUserrTest() throws JsonParseException, JsonMappingException, IOException {

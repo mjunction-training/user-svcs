@@ -16,9 +16,6 @@ spring:
         username: "user"       #These two are needed so that the client
         password: "password"   #can register at the protected server api
         instance:          prefer-ip: true
-          metadata:
-            user.name: "user"         #These two are needed so that the server
-            user.password: "user" #can access the protected client endpoints
         url:
         - ${ADMIN_SERVER_URL:http://localhost:9090/}
   jpa:
@@ -38,6 +35,14 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}    
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-uri: http://localhost:8769/uaa/oauth/token_key
+      id: openid
+      serviceId: ${PREFIX:}resource
 
 # Logging
 logging:
