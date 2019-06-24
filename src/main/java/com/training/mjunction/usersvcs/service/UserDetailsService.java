@@ -11,6 +11,6 @@ public interface UserDetailsService extends org.springframework.security.core.us
 
 	User save(User user);
 
-	void delate(String username);
+	void delete(String username);
 
 }

@@ -13,7 +13,7 @@ import com.training.mjunction.usersvcs.data.domain.User;
 import com.training.mjunction.usersvcs.data.repository.UserRepository;
 
 @Service
-@CacheConfig(cacheNames = "users_cache")
+@CacheConfig(cacheNames = "user_details_cache", cacheManager = "cacheManager")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
@@ -21,7 +21,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(key = "#username", unless = "#result != null")
+	@Cacheable(key = "#username", unless = "#result == null")
+	@CachePut(key = "#username", unless = "#result == null")
 	public User loadUserByUsername(final String username) throws UsernameNotFoundException {
 
 		User user = userRepository.findByUsernameIgnoreCase(username).orElseGet(() -> null);
@@ -46,14 +47,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	@Override
-	@CachePut(key = "#result.username", unless = "#result != null")
+	@CachePut(key = "#user.username", unless = "#result == null")
 	public User save(final User user) {
 		return userRepository.save(user);
 	}
 
 	@Override
 	@CacheEvict(key = "#username", allEntries = false)
-	public void delate(final String username) {
+	public void delete(final String username) {
 
 		final User user = userRepository.findByUsernameIgnoreCase(username).orElseGet(() -> null);
 

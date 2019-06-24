@@ -12,6 +12,6 @@ public interface OAuth2ClientDetailsService extends ClientDetailsService {
 
 	OAuth2Client save(OAuth2Client client);
 
-	void delate(String clientId);
+	void delete(String clientId);
 
 }

@@ -13,7 +13,7 @@ import com.training.mjunction.usersvcs.data.domain.OAuth2Client;
 import com.training.mjunction.usersvcs.data.repository.OAuth2ClientRepository;
 
 @Service
-@CacheConfig(cacheNames = "client_details_cache")
+@CacheConfig(cacheNames = "client_details_cache", cacheManager = "cacheManager")
 public class OAuth2ClientDetailsServiceImpl implements OAuth2ClientDetailsService {
 
 	@Autowired
@@ -21,7 +21,7 @@ public class OAuth2ClientDetailsServiceImpl implements OAuth2ClientDetailsServic
 
 	@Override
 	@Transactional(readOnly = true)
-	@Cacheable(key = "#clientId", unless = "#result != null")
+	@Cacheable(key = "#clientId", unless = "#result == null")
 	public OAuth2Client loadClientByClientId(final String clientId) throws ClientRegistrationException {
 
 		final OAuth2Client client = oAuth2ClientRepository.findByClientIdIgnoreCase(clientId).orElseGet(() -> null);
@@ -34,14 +34,14 @@ public class OAuth2ClientDetailsServiceImpl implements OAuth2ClientDetailsServic
 	}
 
 	@Override
-	@CachePut(key = "#result.clientId", unless = "#result != null")
+	@CachePut(key = "#client.clientId", unless = "#result == null")
 	public OAuth2Client save(final OAuth2Client client) {
 		return oAuth2ClientRepository.save(client);
 	}
 
 	@Override
-	@CacheEvict(key = "#client.clientId", allEntries = false)
-	public void delate(final String clientId) {
+	@CacheEvict(key = "#clientId", allEntries = false)
+	public void delete(final String clientId) {
 
 		final OAuth2Client client = oAuth2ClientRepository.findByClientIdIgnoreCase(clientId).orElseGet(() -> null);
 
